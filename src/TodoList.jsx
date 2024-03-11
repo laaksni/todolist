@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TodoTable from "./TodoTable";
 
 function TodoList() {
-  const [todo, setTodo] = useState({ description: "", date: "" });
+  const [todo, setTodo] = useState({ description: "", date: "", priority: "" });
   const [todos, setTodos] = useState([]);
 
   const handleChange = (event) => {
@@ -15,7 +15,7 @@ function TodoList() {
 
   const addTodo = () => {
     setTodos([todo, ...todos]);
-    setTodo({ description: "", date: "" });
+    setTodo({ description: "", date: "", priority: "" });
   };
 
   const deleteTodo = (index) => {
@@ -38,6 +38,12 @@ function TodoList() {
         name="date"
         onChange={handleChange}
         value={todo.date}
+      />
+      <input
+        placeholder="Priority"
+        name="priority"
+        onChange={handleChange}
+        value={todo.priority}
       />
       <button onClick={addTodo}>Add</button>
       <TodoTable todos={todos} deleteTodo={deleteTodo} />
