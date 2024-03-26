@@ -6,6 +6,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+
 
 
 export default function TodoList() {
@@ -22,6 +26,11 @@ export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState({ desc: "", priority: "", date: "" });
   const gridRef = useRef();
+  const [tabValue, setTabValue] = React.useState(0);
+
+  const handleChangeTab = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   const addTodo = () => {
     setTodos([...todos, todo]);
@@ -44,32 +53,40 @@ export default function TodoList() {
 
   return (
     <>
-      <Stack mt={2} direction="row" spacing={2} justifyContent="center" alignItems="center">
-        <TextField
-          placeholder="Description"
-          onChange={e => setTodo({ ...todo, desc: e.target.value })}
-          value={todo.desc} />
-        <TextField
-          placeholder="Priority"
-          onChange={e => setTodo({ ...todo, priority: e.target.value })}
-          value={todo.priority} />
+      <Tabs value={tabValue} onChange={handleChangeTab} aria-label="tabs">
+        <Tab label="Home" />
+        <Tab label="Todos" />
+      </Tabs>
+      <div role="tabpanel" hidden={tabValue !== 0}>
+        <Typography variant="h3" align="center">Teretulemast ToDoListalle!</Typography>
+      </div>
+      <div role="tabpanel" hidden={tabValue !== 1}>
+        <Stack mt={2} direction="row" spacing={2} justifyContent="center" alignItems="center">
+          <TextField
+            placeholder="Description"
+            onChange={e => setTodo({ ...todo, desc: e.target.value })}
+            value={todo.desc} />
+          <TextField
+            placeholder="Priority"
+            onChange={e => setTodo({ ...todo, priority: e.target.value })}
+            value={todo.priority} />
           <DatePicker
             label="Date"
             onChange={handleChangeDate}
             value={todo.date || null}
             renderInput={(params) => <TextField {...params} />} />
-        <Button variant="contained" onClick={addTodo}>Add</Button>
-        <Button variant="outlined" color="error" onClick={handleDelete}>Delete</Button>
-      </Stack>
-      <div className="ag-theme-material" style={{ width: 700, height: 500 }}>
-        <AgGridReact
-          ref={gridRef}
-          onGridReady={params => gridRef.current = params.api}
-          rowData={todos}
-          columnDefs={columns}
-          rowSelection="single"
-        />
-
+          <Button variant="contained" onClick={addTodo}>Add</Button>
+          <Button variant="outlined" color="error" onClick={handleDelete}>Delete</Button>
+        </Stack>
+        <div className="ag-theme-material" style={{ width: 700, height: 500 }}>
+          <AgGridReact
+            ref={gridRef}
+            onGridReady={params => gridRef.current = params.api}
+            rowData={todos}
+            columnDefs={columns}
+            rowSelection="single"
+          />
+        </div>
       </div>
     </>
   );
