@@ -1,5 +1,5 @@
 
-function TodoTable({ todos, deleteTodo }) {
+export default function TodoTable({ todos, deleteTodo }) {
   return (
     <table>
       <tbody>
@@ -17,5 +17,3 @@ function TodoTable({ todos, deleteTodo }) {
     </table>
   );
 }
-
-export default TodoTable;
