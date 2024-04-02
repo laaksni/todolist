@@ -51,6 +51,10 @@ export default function TodoList() {
     setTodo({ ...todo, date });
   };
 
+  const handleClear = () => {
+    setTodos([]);
+  };
+
   return (
     <>
       <Tabs value={tabValue} onChange={handleChangeTab} aria-label="tabs">
@@ -75,8 +79,9 @@ export default function TodoList() {
             onChange={handleChangeDate}
             value={todo.date || null}
             renderInput={(params) => <TextField {...params} />} />
-          <Button variant="contained" onClick={addTodo}>Add</Button>
+          <Button variant="outlined" onClick={addTodo}>Add</Button>
           <Button variant="outlined" color="error" onClick={handleDelete}>Delete</Button>
+          <Button variant="outlined" color="success" onClick={handleClear}>Clear</Button>
         </Stack>
         <div className="ag-theme-material" style={{ width: 700, height: 500 }}>
           <AgGridReact
